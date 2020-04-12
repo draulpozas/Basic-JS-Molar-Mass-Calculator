@@ -127,7 +127,7 @@ const molar = new Array();
     // molar["Ac"]= 43.045;
 const uppers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const lowers = 'abcdefghijklmnopqrstuvwxyz';
-const nums = '1234567890';
+const nums = '123456789';
 
 function calc() {
     let inputField = document.getElementById('formula');
@@ -148,15 +148,12 @@ function interpFormula(formula) {
         let c = formula.charAt(i);
         if (uppers.includes(c)) {
             let nc = formula.charAt(i+1);
-            if (uppers.includes(nc)) {
+            if (uppers.includes(nc) || nums.includes(nc) || nc == '(') {
                 atoms.push(c);
             } else if (lowers.includes(nc)) {
                 atoms.push(''+c+nc);
-            } else if (nums.includes(nc)) {
-                atoms.push(c);
             }
-        } else if (nums.includes(c)) {
-            let checkNext = true;
+        } else if (nums.includes(c) && i > 0) {
             let number = getNumberStartingAt(i, formula);
 
             let atomPos = atoms.length-1;
@@ -165,7 +162,27 @@ function interpFormula(formula) {
             }
 
             i += (''+number).length - 1;
-        } 
+        } else if (c == '(') {
+            let start = i;
+            let size = 0;
+            do {
+                ++size;
+            } while (formula.charAt(start+size) != ')' && start+size < formula.length);
+
+            let subformula = formula.substring(start + 1, start+size);
+            let innerAtoms = interpFormula(subformula);
+            i += size;
+
+            if (nums.includes(formula.charAt(start+size + 1))) {
+                let number = getNumberStartingAt(i+1, formula);
+                i += (''+number).length;
+                do {
+                    atoms = atoms.concat(innerAtoms);
+                } while (1 < number--);
+            } else {
+                atoms = atoms.concat(innerAtoms);
+            }
+        }
     }
 
     return atoms;
@@ -188,4 +205,9 @@ function getNumberStartingAt(i, formula) {
 function displayResult(atoms, mass) {
     let resultContainer = document.getElementById('result');
     resultContainer.innerHTML = mass;
+    let atomsstr = '<br>Found:';
+    atoms.forEach(atom => {
+        atomsstr += ' '+atom;
+    });
+    resultContainer.innerHTML += atomsstr;
 }
