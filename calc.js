@@ -156,14 +156,33 @@ function interpFormula(formula) {
                 atoms.push(c);
             }
         } else if (nums.includes(c)) {
-            let pos = atoms.length-1;
-            for (let j = 1; j < c; j++) {
-                atoms.push(atoms[pos]);
+            let checkNext = true;
+            let number = getNumberStartingAt(i, formula);
+
+            let atomPos = atoms.length-1;
+            for (let j = 1; j < number; j++) {
+                atoms.push(atoms[atomPos]);
             }
-        }
+
+            i += (''+number).length - 1;
+        } 
     }
 
     return atoms;
+}
+
+function getNumberStartingAt(i, formula) {
+    let checkNext = true;
+    let pos = i;
+    do {
+        if (!nums.includes(formula.charAt(pos))) {
+            checkNext = false;
+        } else {
+            pos++;
+        }
+    } while (checkNext && pos < formula.length);
+
+    return parseInt(formula.substring(i, pos+1));
 }
 
 function displayResult(atoms, mass) {
