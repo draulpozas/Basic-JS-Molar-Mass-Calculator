@@ -127,7 +127,7 @@ const molar = new Array();
     // molar["Ac"]= 43.045;
 const uppers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const lowers = 'abcdefghijklmnopqrstuvwxyz';
-const nums = '123456789';
+const nums = '1234567890';
 
 function calc() {
     let inputField = document.getElementById('formula');
