@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <script src="calc.js"></script>
     <title>Basic Mm Calculator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <input type="text" id="formula" onkeyup="calc()" autocomplete="off" placeholder="Write your formula here..." size="50">
-    <span id="result"></span>
+    <!-- <img src="molecule.png" alt="molecule" width="350px"> -->
+
+    <header>
+        <div id="molecule"></div>
+        Basic Molar Mass Calculator
+    </header>
+    <div id="container">
+        <input type="text" id="formula" onkeyup="calc()" autofocus autocomplete="off" placeholder="Write your formula here..." size="50">
+        <div id="result"></div>
+    </div>
 </body>
+
 </html>

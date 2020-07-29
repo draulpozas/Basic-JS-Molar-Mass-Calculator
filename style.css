@@ -1,0 +1,63 @@
+* {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 25px;
+    margin: 0;
+    color: white;
+}
+
+body {
+    background-color: #81b3e8;
+}
+
+header {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 1.2em;
+    font-weight: 100;
+    text-align: center;
+    max-width: 90vw;
+    margin: auto;
+    margin-top: 1em;
+}
+
+#molecule {
+    width: 10em;
+    height: 7em;
+    max-width: 90vw;
+    max-height: 40vh;
+    margin: auto;
+    background-image: url("molecule.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    
+    animation-name: anim;
+    animation-duration: 3s;
+    animation-direction: alternate;
+    animation-timing-function: ease-in;
+    animation-iteration-count: infinite;
+}
+
+
+#container {
+    text-align: center;
+}
+
+input {
+    font-size: 1.5em;
+    max-width: 90vw;
+    border: 0;
+    background-color: inherit;
+    border-bottom: 3px solid white;
+    margin: 2em 0;
+    text-align: center;
+}
+
+@keyframes anim {
+    from {
+/*         transform: translateY(0); */
+        filter: none;
+    }
+    to {
+/*         transform: translateY(-.3em); */
+        filter: opacity(.8);
+    }
+}
