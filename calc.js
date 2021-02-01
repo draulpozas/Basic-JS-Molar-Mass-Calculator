@@ -129,18 +129,26 @@ const uppers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const lowers = 'abcdefghijklmnopqrstuvwxyz';
 const nums = '1234567890';
 
-function calc() {
-    let inputField = document.getElementById('formula');
-    let formula = inputField.value;
-
+/**
+ * Reads all atoms in the formula, adds up all their molar masses.
+ * @param {String} formula 
+ * @returns {JSON} Object containing an array of atoms found, and a number with the mass calculated.
+ */
+function calc(formula) {
     let mass = 0;
     let atoms = interpFormula(formula);
     atoms.forEach(atom => {
         mass += molar[atom];
     });
-    displayResult(atoms, mass);
+    mass = mass.toPrecision(6);
+    return({atoms, mass});
 }
 
+/**
+ * Reads the formula and returns an array with all the atoms.
+ * @param {String} formula 
+ * @returns {Arrray} an array with all found atoms in it, as strings.
+ */
 function interpFormula(formula) {
     let atoms = [];
 
@@ -188,6 +196,15 @@ function interpFormula(formula) {
     return atoms;
 }
 
+/**
+ * Reads a number contained inside string 'formula', starting at position 'i'.
+ * Used in 'interpFormula' to read numbers.
+ * Checks the characters one by one and stops when the character is not a number.
+ * Returns the substring found to contain consecutive numbers starting from position 'i'.
+ * @param {Number} i 
+ * @param {String} formula
+ * @returns {Number} Number found inside formula, starting at 'i' and ending somewhere else in the string.
+ */
 function getNumberStartingAt(i, formula) {
     let checkNext = true;
     let pos = i;
@@ -202,14 +219,6 @@ function getNumberStartingAt(i, formula) {
     return parseInt(formula.substring(i, pos + 1));
 }
 
-function displayResult(atoms, mass) {
-    let resultContainer = document.getElementById('result');
-    resultContainer.innerHTML = `${mass.toFixed(4)} g/mol`;
-    let atomsstr = '<br>Found:';
-    atoms.forEach(atom => {
-        atomsstr += ' ' + atom;
-    });
-    resultContainer.innerHTML += atomsstr;
+module.exports = {
+    calc
 }
-
-window.onload = calc;
