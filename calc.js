@@ -129,6 +129,14 @@ const uppers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const lowers = 'abcdefghijklmnopqrstuvwxyz';
 const nums = '1234567890';
 
+function init() {
+    let inputField = document.getElementById('formula');
+    let formula = inputField.value;
+    console.log(formula);
+    let result = calc(formula);
+    displayResult(result.atoms, result.mass);
+}
+
 /**
  * Reads all atoms in the formula, adds up all their molar masses.
  * @param {String} formula 
@@ -219,6 +227,15 @@ function getNumberStartingAt(i, formula) {
     return parseInt(formula.substring(i, pos + 1));
 }
 
-module.exports = {
-    calc
+function displayResult(atoms, mass) {
+    console.log(mass);
+    let resultContainer = document.getElementById('result');
+    resultContainer.innerHTML = `${mass} g/mol`;
+    let atomsstr = '<br>Found:';
+    atoms.forEach(atom => {
+        atomsstr += ' ' + atom;
+    });
+    resultContainer.innerHTML += atomsstr;
 }
+
+window.onload = calc; 
